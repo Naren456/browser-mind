@@ -1,30 +1,24 @@
 <div align="center">
-  <h1>🌐 BrowserMind</h1>
+  <h1>BrowserMind</h1>
   <p><strong>A production-ready, autonomous web automation agent driven by ReAct and Playwright.</strong></p>
-
-  <p>
-    <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node-%3E%3D%2018.0.0-brightgreen.svg" alt="Node Version"></a>
-    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/react-%5E18.2.0-blue.svg" alt="React"></a>
-    <a href="https://playwright.dev/"><img src="https://img.shields.io/badge/playwright-%5E1.40.0-red.svg" alt="Playwright"></a>
-  </p>
 
   <img src="./assets/hero-dark.png" alt="BrowserMind Operator Console - Dark Mode" width="100%" style="border-radius: 8px; border: 1px solid #27272a; margin-top: 1rem;" />
 </div>
 
 <hr />
 
-## 📖 Table of Contents
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Architecture](#-architecture)
-- [Getting Started](#-getting-started)
-- [Usage](#-usage)
-- [Contributing](#-contributing)
+## Table of Contents
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
-## 🔭 Overview
+## Overview
 BrowserMind is a full-stack autonomous web automation agent. By leveraging a **ReAct (Reasoning and Acting)** orchestration loop and a headless Playwright browser, BrowserMind can execute complex, multi-step tasks on the live web driven purely by natural language instructions.
 
-### 🛠️ Built With
+### Built With
 <p>
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
@@ -34,20 +28,20 @@ BrowserMind is a full-stack autonomous web automation agent. By leveraging a **R
   <img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" />
 </p>
 
-## ✨ Key Features
+## Key Features
 
-- **🧠 LLM-Driven ReAct Loop**: At the core of BrowserMind is an autonomous reasoning engine. The LLM iterates in a continuous loop—thinking, invoking tools, evaluating results, and correcting its own path.
-- **🎯 Set-of-Marks (SoM) Navigation**: Instead of forcing the LLM to parse raw HTML or guess CSS selectors, the backend assigns a unique integer ID to every interactive element. The agent interacts with extreme precision using the `interact_with_id` tool.
-- **🎛️ "Industrial Telemetry" Console**: A brutalist, high-trust Operator Console built with React. Features include a **Live Viewport Stream**, a continuous **Telemetry Tape** log of machine reasoning, and a **Vision Timeline Filmstrip**.
+- **LLM-Driven ReAct Loop**: At the core of BrowserMind is an autonomous reasoning engine. The LLM iterates in a continuous loop—thinking, invoking tools, evaluating results, and correcting its own path.
+- **Set-of-Marks (SoM) Navigation**: Instead of forcing the LLM to parse raw HTML or guess CSS selectors, the backend assigns a unique integer ID to every interactive element. The agent interacts with extreme precision using the `interact_with_id` tool.
+- **"Industrial Telemetry" Console**: A brutalist, high-trust Operator Console built with React. Features include a **Live Viewport Stream**, a continuous **Telemetry Tape** log of machine reasoning, and a **Vision Timeline Filmstrip**.
 
-## 🏗️ Architecture
+## Architecture
 The system is built on a decoupled architecture:
 - **Backend (Express/Node.js)**: Manages Playwright, the in-memory RunStore, and communication with the OpenRouter API.
 - **Frontend (React/Vite)**: An interactive dashboard consuming REST endpoints and real-time SSE streams.
 
 > **Deep Dives**: See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the visual architecture diagram and [`backend/README.md`](./backend/README.md) for the backend execution engine details.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher)
@@ -94,7 +88,7 @@ cd frontend
 npm run dev
 ```
 
-## 🎮 Usage
+## Usage
 
 1. Navigate to the frontend at `http://localhost:5173`.
 2. Toggle between Light/Dark mode in the top right.
@@ -102,7 +96,7 @@ npm run dev
 4. Click **INITIALIZE RUN**.
 5. Watch the **Telemetry Tape** update in real-time as the agent thinks and acts. The **Live Viewport** will automatically stream screenshots as the browser navigates the task!
 
-## 🤝 Contributing
+## Contributing
 Contributions, issues, and feature requests are welcome!
 Feel free to check the [issues page](https://github.com/your-username/browsermind/issues).
 
@@ -111,4 +105,3 @@ Feel free to check the [issues page](https://github.com/your-username/browsermin
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
