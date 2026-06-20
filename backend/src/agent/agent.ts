@@ -195,7 +195,7 @@ export async function runAgent(
         };
         emit(doneEvent);
         logger.logStep({ step, ...doneEvent });
-        await browserController.close();
+        // await browserController.close();
         return;
       }
     }
@@ -210,6 +210,6 @@ export async function runAgent(
     emit(errorEvent);
     logger.logError('Agent loop failed', error);
   } finally {
-    await browserController.close();
+    // await browserController.close();
   }
 }

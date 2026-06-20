@@ -58,6 +58,8 @@ export class ToolExecutor {
         return await this.actions.refresh_page();
       case 'evaluate_script':
         return await this.actions.evaluate_script(args.script);
+      case 'download_pdf_from_url':
+        return await this.actions.download_pdf_from_url();
       default:
         return { success: false, error: `Unknown tool: ${name}` };
     }

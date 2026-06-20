@@ -23,7 +23,8 @@ export class BrowserController {
         args: ['--start-fullscreen']
       });
       this.context = await this.browser.newContext({
-        viewport: null
+        viewport: null,
+        acceptDownloads: true
       });
       
       const cursorScript = `
@@ -63,6 +64,22 @@ export class BrowserController {
       await this.context.addInitScript(cursorScript);
       
       this.page = await this.context.newPage();
+
+      // Automatically save any downloaded files to the backend/downloads directory
+      this.page.on('download', async (download) => {
+        try {
+          const downloadsDir = path.resolve(__dirname, '../../downloads', this.runId);
+          if (!fs.existsSync(downloadsDir)) {
+            fs.mkdirSync(downloadsDir, { recursive: true });
+          }
+          const downloadPath = path.join(downloadsDir, download.suggestedFilename());
+          await download.saveAs(downloadPath);
+          console.log(`[Browser] File downloaded successfully to ${downloadPath}`);
+        } catch (downloadErr) {
+          console.error('[Browser] Failed to save download:', downloadErr);
+        }
+      });
+
       return { success: true };
     } catch (e: any) {
       return { success: false, error: e.message };

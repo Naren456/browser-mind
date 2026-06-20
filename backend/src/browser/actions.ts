@@ -179,4 +179,32 @@ export class BrowserActions {
       return { success: false, error: e.message };
     }
   }
+
+  async download_pdf_from_url(): Promise<{ success: boolean; data?: string; error?: string }> {
+    try {
+      const url = this.page.url();
+      if (!url.toLowerCase().endsWith('.pdf')) {
+        return { success: false, error: 'Current page does not appear to be a PDF (URL must end in .pdf)' };
+      }
+      const response = await this.page.request.get(url);
+      const buffer = await response.body();
+      
+      const fs = require('fs');
+      const path = require('path');
+      
+      // In this context we don't have runId easily available in actions, 
+      // so we'll just save it to downloads/ directory directly.
+      const downloadsDir = path.resolve(__dirname, '../../downloads');
+      if (!fs.existsSync(downloadsDir)) {
+        fs.mkdirSync(downloadsDir, { recursive: true });
+      }
+      const filename = path.basename(new URL(url).pathname) || 'download.pdf';
+      const downloadPath = path.join(downloadsDir, filename);
+      fs.writeFileSync(downloadPath, buffer);
+      
+      return { success: true, data: `PDF downloaded successfully to ${downloadPath}` };
+    } catch (e: any) {
+      return { success: false, error: `Failed to download PDF: ${e.message}` };
+    }
+  }
 }

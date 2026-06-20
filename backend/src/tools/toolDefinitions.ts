@@ -203,5 +203,18 @@ export const toolDefinitions: any[] = [
         additionalProperties: false
       }
     }
+  },
+  {
+    type: "function",
+    function: {
+      name: "download_pdf_from_url",
+      description: "Downloads the PDF currently being viewed in the browser directly to disk. Use this when the browser has navigated to a .pdf URL and the internal PDF viewer is open.",
+      parameters: {
+        type: "object",
+        properties: {},
+        required: [],
+        additionalProperties: false
+      }
+    }
   }
 ];
