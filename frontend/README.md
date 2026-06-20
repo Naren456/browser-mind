@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# BrowserMind Frontend: Operator Console
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the React + Vite frontend for BrowserMind. It serves as the primary interface for users to dispatch tasks to the autonomous agent and monitor its real-time execution.
 
-Currently, two official plugins are available:
+## Design Philosophy: Industrial Telemetry
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Rather than relying on consumer-grade "AI Chatbot" aesthetics (like soft gradients, floating chat bubbles, and glassmorphism), this frontend is intentionally designed as an **Operator Console**. 
 
-## React Compiler
+The UI takes inspiration from diagnostic readouts, server logs, and industrial telemetry. 
+Key design choices include:
+- **Strict Grid Layouts**: 1px solid black borders delineate every section.
+- **Monospace Dominance**: `IBM Plex Mono` is used for all machine outputs, tool arguments, and timestamps to emphasize legibility and raw data representation.
+- **High Contrast**: A stark palette (Machine Gray, Stark White, Pure Near-Black, and Blueprint Blue) to ensure the interface feels like a high-trust diagnostic tool.
+- **Dark Mode**: A first-class dark mode that inverts the palette to ultra-dark gray (`#18181b`) while maintaining the brutalist aesthetic.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Core Components
 
-## Expanding the ESLint configuration
+The UI is divided into two primary layout columns, followed by a historical gallery:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. `TaskInput.tsx` (CMD / Control)
+A terminal-like input form where the user enters the natural language task to kick off the agent. It eschews complex dropdowns in favor of a raw command prompt.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 2. `RunStatus.tsx`
+A high-contrast status banner that displays the current `SYS_STATE` (IDLE, RUNNING, COMPLETED, ERROR) and any final output messages from the LLM.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 3. `StepLog.tsx` (The Telemetry Tape)
+A continuous, append-only vertical timeline representing the ReAct loop. It streams Server-Sent Events (SSE) from the backend, displaying exact millisecond timestamps, the agent's internal `[THINK]` reasoning, and the exact `[ACTION]` JSON payloads dispatched to the browser.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 4. `ScreenshotGallery.tsx` (Vision Filmstrip)
+A horizontal, grayscale filmstrip gallery at the bottom of the layout. It captures and stores the exact browser viewport state alongside the corresponding tool execution, allowing the operator to audit the agent's visual history.
+
+## API Integration (`api.ts`)
+
+The frontend remains entirely decoupled from Playwright or LLM logic. It communicates with the backend via two main paths:
+1. **REST POST (`/api/runs`)**: Initiates a new run with the user's task.
+2. **Server-Sent Events (`/api/runs/:id/events`)**: Subscribes to a live event stream. This ensures the frontend remains highly performant and non-blocking, simply reacting to new JSON blobs pushed by the backend as the agent navigates the web.
+
+## Running Locally
+
+Ensure you have installed the dependencies:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Start the Vite development server:
+```bash
+npm run dev
 ```
+
+The application will be available at `http://localhost:5173`.
