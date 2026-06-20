@@ -1,11 +1,7 @@
 <div align="center">
   <h1>BrowserMind</h1>
-  <p><strong>A production-ready, autonomous web automation agent driven by ReAct and Playwright.</strong></p>
-
-  <img src="./assets/hero-dark.png" alt="BrowserMind Operator Console - Dark Mode" width="100%" style="border-radius: 8px; border: 1px solid #27272a; margin-top: 1rem;" />
-</div>
-
-<hr />
+  <p><strong>An autonomous web automation agent driven by ReAct and Playwright.</strong></p>
+</div><hr />
 
 ## Table of Contents
 - [Overview](#overview)
